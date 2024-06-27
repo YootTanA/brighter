@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+CMD=$1
+MAX_BRIGHTNESS=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+MIN_BRIGHTNESS=0
+CURRENT_BRIGHTNESS=$(cat /sys/class/backlight/intel_backlight/brightness)
+DES=/sys/class/backlight/intel_backlight/brightness
+
+
+if [[ $CMD =~ ^\+[0-9]+$ ]]; then
+  inc=${CMD#"+"}
+  target=$(( ${CURRENT_BRIGHTNESS}+${inc} ))
+
+  if [ "$target" -gt $MAX_BRIGHTNESS ]; then
+    target=$MAX_BRIGHTNESS
+  fi
+  echo "$target" > $DES
+elif [[ $CMD =~ ^\-[0-9]+$  ]]; then
+  dec=${CMD#"-"}
+  target=$(( ${CURRENT_BRIGHTNESS}-${dec} ))
+
+  if [ "$target" -lt $MIN_BRIGHTNESS ]; then
+    target=0
+  fi
+  echo "$target" > $DES
+elif [[ $CMD =~ ^[0-9]+$ ]]; then
+  echo "$CMD" > $DES
+else 
+  echo "invalid parameter"
+fi
