@@ -1,6 +1,6 @@
 # Brighter
 
-**Brighter provides you a ability to control your screen brightness.**
+**Brighter provides you a ability to control your screen brightness on your Linux machine.**
 
 Because this is just a prototype version, you need to ensure that the destination in the script is fit for your
 machine. For example, my machine is powered by Intel so my destination would be `intel_brightness`.
